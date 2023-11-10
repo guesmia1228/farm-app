@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-11-10T05:32:29.105Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36" etag="k59lTw1LyGOxuWsc8sqm" version="22.1.0" type="github">
+<mxfile host="app.diagrams.net" modified="2023-11-10T05:33:44.047Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36" etag="GArG8G7iAPMFAveFxVB-" version="22.1.0" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Basic Sysytem design">
     <mxGraphModel dx="1050" dy="601" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#00000" math="0" shadow="0">
       <root>
@@ -7,8 +7,8 @@
         <mxCell id="t5rr6aU1e4dXlaeN4tm4-0" value="F" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="328" y="23" width="25" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="t5rr6aU1e4dXlaeN4tm4-1" value="Farm digital" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="187" y="32.8" width="369" height="63.2" as="geometry" />
+        <mxCell id="t5rr6aU1e4dXlaeN4tm4-1" value="&lt;font style=&quot;font-size: 36px;&quot;&gt;Farm digital&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="185" y="4.399999999999999" width="369" height="63.2" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
