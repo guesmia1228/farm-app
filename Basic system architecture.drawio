@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-11-10T10:18:55.868Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36" etag="Pk9Sy4fs6iyF4U2IbdpP" version="22.1.0" type="github">
+<mxfile host="app.diagrams.net" modified="2023-11-10T13:17:04.652Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36" etag="L4RCZhPY3ypi1tB88SLf" version="22.1.0" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Basic Sysytem design">
-    <mxGraphModel dx="1290" dy="691" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#00000" math="0" shadow="0">
+    <mxGraphModel dx="1290" dy="601" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#00000" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -166,7 +166,7 @@
           <mxGeometry x="610" y="298" width="80" height="30" as="geometry" />
         </mxCell>
         <mxCell id="7t_R3RJd9YNLqy_qNhjG-56" value="" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/generic_server.svg;rounded=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="1520" y="384.6" width="66.3" height="118.4" as="geometry" />
+          <mxGeometry x="1520" y="370" width="66.3" height="118.4" as="geometry" />
         </mxCell>
         <mxCell id="7t_R3RJd9YNLqy_qNhjG-57" value="Payment service" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="1498.15" y="503" width="110" height="30" as="geometry" />
