@@ -17,22 +17,32 @@ import java.util.stream.Collectors;
 
 
 @Entity
-@Table(name = "famers_registration")
+@Table(name = "farmers_registration")
 @AllArgsConstructor
 @Data
 @Builder
 @NoArgsConstructor
 
-public class UserModel implements UserDetails {
+public class FarmerModel implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+@Column(name = "farmer_name")
     private String name;
+@Column(name = "farmer_email")
     private String email;
+
     private String password;
+    @Column(name = "farmer_id")
+    private  String  farmerId;
+    @Column(name = "registraion_time")
+    private  String registrationTime;
+    @Column(name = "phone_number")
+    private  int phoneNumber;
+    @Column(name = "verified_user")
+    private  boolean verified=false;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+    @JoinTable(name = "farmer_roles", joinColumns = @JoinColumn(name = "farmer_id", referencedColumnName = "farmer_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Roles> roles = new ArrayList<>();
 

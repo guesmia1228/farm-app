@@ -1,6 +1,6 @@
 package com.farmdigital.nerddevs.security;
 
-import com.farmdigital.nerddevs.repository.UserRepository;
+import com.farmdigital.nerddevs.repository.FarmerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,11 +17,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @AllArgsConstructor
 public class SecurityAppConfiguration {
-    private final UserRepository userRepository;
+    private final FarmerRepository farmerRepository;
 //    ! custom user details
     @Bean
     public UserDetailsService userDetailsService(){
-        return username -> userRepository.findByEmail(username).orElseThrow(()->new EntityNotFoundException("user not found"));
+        return username -> farmerRepository.findByEmail(username).orElseThrow(()->new EntityNotFoundException("user not found"));
     }
 
 //    ! password encoder
