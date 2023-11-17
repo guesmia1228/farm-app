@@ -31,8 +31,4 @@ var res=userRegistrationService.authenticateauser(request);
     }
 
 // todo  authenticate user route
-
-
-
-
 }
