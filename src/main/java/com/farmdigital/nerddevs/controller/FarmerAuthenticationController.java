@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 
 @RequestMapping("/api/v1/farm_digital/super")
-public class FarmerAuthenticationExceptionAdvice {
+public class FarmerAuthenticationController {
 
     private  final UserRegistrationService userRegistrationService;
 
