@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 
-@RequestMapping("/super")
+@RequestMapping("/api/v1/farm_digital/super")
 public class LoginController {
 
     private  final UserRegistrationService userRegistrationService;
