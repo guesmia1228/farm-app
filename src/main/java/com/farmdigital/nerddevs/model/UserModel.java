@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 
 @Entity
-
+@Table(name = "famers_registration")
 @AllArgsConstructor
 @Data
 @Builder
