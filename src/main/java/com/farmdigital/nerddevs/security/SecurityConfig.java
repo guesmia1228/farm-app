@@ -25,6 +25,7 @@ public class SecurityConfig {
             .cors(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests((req)->req
                     .requestMatchers("/api/v1/farm_digital/super/**")
+
                     .permitAll()
                     .anyRequest()
                     .authenticated()

@@ -45,7 +45,6 @@ public class JwtServices {
         byte[] keyBytes = Decoders.BASE64.decode(SECRETE_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
 
-
     }
 
     //  !  create token without claims
