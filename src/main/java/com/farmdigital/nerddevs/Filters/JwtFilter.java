@@ -1,9 +1,11 @@
 package com.farmdigital.nerddevs.Filters;
 
-import com.farmdigital.nerddevs.Exceptions.ExceptionController.ExceptionResponse;
 import com.farmdigital.nerddevs.Exceptions.NoJWtException;
 import com.farmdigital.nerddevs.security.JwtServices;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,10 +21,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Component
@@ -32,7 +35,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private final JwtServices jwtServices;
     private final UserDetailsService userDetailsService;
 private  final ObjectMapper objectMapper;
-private final ExceptionResponse exceptionResponse;
+    private final Map<String, Object> errorMessage = new HashMap<>();
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
@@ -40,17 +43,21 @@ private final ExceptionResponse exceptionResponse;
             @NonNull FilterChain filterChain) throws ServletException, IOException {
         try {
 
-
             String authheader = request.getHeader("Authorization");
 
             String username;
             String token;
+            LOGGER.info(request.getContextPath());
+
+//            todo handle errors for only apis which are not whitelisted
             if (authheader == null || !authheader.startsWith("Bearer")) {
-                LOGGER.info("no json token was provided");
-                throw new NoJWtException("no authentication token was provided", 401);
+//                LOGGER.info("no json token was provided");
+//                throw new NoJWtException("no authentication token was provided", 401);
+filterChain.doFilter(request,response);
+return;
             }
             token = authheader.substring(7);
-            System.out.println(token);
+
 
             username = jwtServices.extractUsername(token);
 //        ! search user from the databse
@@ -67,21 +74,51 @@ private final ExceptionResponse exceptionResponse;
                         new WebAuthenticationDetailsSource().buildDetails(request)
                 );
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
+                filterChain.doFilter(request, response);
+            }else {
+                filterChain.doFilter(request,response);
             }
 
-            filterChain.doFilter(request, response);
+
         } catch (Exception ex) {
            if( ex instanceof  NoJWtException){
-               var erroMessage= exceptionResponse
-                       .setErrorResponse("no token provided in your request headers" +
-                               " , a valid token is required",HttpStatus.UNAUTHORIZED.toString(),"UNAUTHORIZED_REQUEST");
+               Map<String, Object> erroMessage= setErrorResponse("no token provided in your request headers" +
+                               " , a valid token is required",HttpStatus.FORBIDDEN.toString()
+                               ,"UNAUTHORIZED_REQUEST");
+customServlet(response,erroMessage);
                LOGGER.info(ex.getMessage());
-               response.setContentType("application/json");
-               response.setStatus(401);
-               response.getWriter().write(objectMapper.writeValueAsString(erroMessage));
+
+           }
+
+           if(ex instanceof SignatureException){
+               var errorMessage= setErrorResponse(ex.getMessage(), String.valueOf(HttpStatus.FORBIDDEN),"UNAUTHORIZED_REQUEST");
+               customServlet(response,errorMessage);
+           }
+
+           if(ex instanceof MalformedJwtException){
+               var errorMessage= setErrorResponse(ex.getMessage(),String.valueOf(HttpStatus.FORBIDDEN),"UNAUTHORIZED_REQUEST");
+               customServlet(response,errorMessage);
+           }
+           if(ex instanceof ExpiredJwtException){
+               var errorMessage= setErrorResponse(ex.getMessage(),String.valueOf(HttpStatus.FORBIDDEN),"UNAUTHORIZED_REQUEST");
+               customServlet(response,errorMessage);
            }
 
         }
+    }
+//    ! function to create a custom serv;et
+
+    public Map<String, Object> setErrorResponse(String message, String statusCode, String errorType) {
+
+        errorMessage.put("errorMessage", message);
+        errorMessage.put("statusCode", statusCode);
+        errorMessage.put("errorType", errorType);
+        return errorMessage;
+    }
+
+    private  void customServlet(HttpServletResponse response,Map<String,Object> error) throws IOException {
+        response.setContentType("application/json");
+        response.setStatus(403);
+        response.getWriter().write(objectMapper.writeValueAsString(error));
     }
 }
