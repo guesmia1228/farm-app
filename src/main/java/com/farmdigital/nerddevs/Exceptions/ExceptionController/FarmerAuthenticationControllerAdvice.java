@@ -1,9 +1,11 @@
 package com.farmdigital.nerddevs.Exceptions.ExceptionController;
 
+import com.farmdigital.nerddevs.Exceptions.NoJWtException;
 import com.farmdigital.nerddevs.Exceptions.UserAlreadyExistException;
 import io.jsonwebtoken.security.SignatureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -33,4 +35,5 @@ return  errorMessage;
         problemDetail.setProperty("error",errorMessage);
         return problemDetail;
     }
+
 }
