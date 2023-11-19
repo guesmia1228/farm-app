@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Builder
 @NoArgsConstructor
 
-public class FarmerModel implements UserDetails {
+public class Farmer implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -41,6 +41,8 @@ public class FarmerModel implements UserDetails {
     private  int phoneNumber;
     @Column(name = "verified_user")
     private  boolean verified=false;
+    @Column(name = "account_type")
+    private  String typeOfAccount="FARMER";
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "farmer_roles", joinColumns = @JoinColumn(name = "farmer_id", referencedColumnName = "farmer_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))

@@ -4,7 +4,7 @@ import com.farmdigital.nerddevs.Dto.AuthenticationDto;
 import com.farmdigital.nerddevs.Dto.FarmerRegistrationDto;
 import com.farmdigital.nerddevs.Exceptions.UserAlreadyExistException;
 import com.farmdigital.nerddevs.model.Roles;
-import com.farmdigital.nerddevs.model.FarmerModel;
+import com.farmdigital.nerddevs.model.Farmer;
 import com.farmdigital.nerddevs.repository.RolesRepository;
 import com.farmdigital.nerddevs.repository.FarmerRepository;
 import com.farmdigital.nerddevs.security.JwtServices;
@@ -44,7 +44,7 @@ public class UserRegistrationService {
             throw new UserAlreadyExistException("user alredy exist !, please try to log in");
         }
 //      !  create a new user
-        FarmerModel newUser = FarmerModel.builder()
+        Farmer newUser = Farmer.builder()
                 .name(user.getName())
                 .email(user.getEmail())
                 .password(passwordEncoder.encode(user.getPassword()))
@@ -84,7 +84,7 @@ public class UserRegistrationService {
                 )
         );
 
-        FarmerModel user;
+        Farmer user;
         if (farmerRepository.findByEmail(req.getEmail()).isPresent()) {
             user = farmerRepository.findByEmail(req.getEmail()).get();
         } else {
