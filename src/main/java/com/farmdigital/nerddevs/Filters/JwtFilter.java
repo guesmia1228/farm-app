@@ -34,8 +34,9 @@ public class JwtFilter extends OncePerRequestFilter {
     public static final Logger LOGGER = LoggerFactory.getLogger(JwtFilter.class);
     private final JwtServices jwtServices;
     private final UserDetailsService userDetailsService;
-private  final ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
     private final Map<String, Object> errorMessage = new HashMap<>();
+
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
@@ -47,14 +48,15 @@ private  final ObjectMapper objectMapper;
 
             String username;
             String token;
-            LOGGER.info(request.getContextPath());
+            LOGGER.info(request.getRequestURI());
 
 //            todo handle errors for only apis which are not whitelisted
             if (authheader == null || !authheader.startsWith("Bearer")) {
 //                LOGGER.info("no json token was provided");
-//                throw new NoJWtException("no authentication token was provided", 401);
-filterChain.doFilter(request,response);
-return;
+
+                filterChain.doFilter(request, response);
+                return;
+
             }
             token = authheader.substring(7);
 
@@ -75,38 +77,38 @@ return;
                 );
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 filterChain.doFilter(request, response);
-            }else {
-                filterChain.doFilter(request,response);
+            } else {
+                filterChain.doFilter(request, response);
             }
 
 
         } catch (Exception ex) {
-           if( ex instanceof  NoJWtException){
-               Map<String, Object> erroMessage= setErrorResponse("no token provided in your request headers" +
-                               " , a valid token is required",HttpStatus.FORBIDDEN.toString()
-                               ,"UNAUTHORIZED_REQUEST");
-customServlet(response,erroMessage);
-               LOGGER.info(ex.getMessage());
+            if (ex instanceof NoJWtException) {
+                Map<String, Object> erroMessage = setErrorResponse("no token provided in your request headers" +
+                                " , a valid token is required", HttpStatus.FORBIDDEN.toString()
+                        , "UNAUTHORIZED_REQUEST");
+                customServlet(response, erroMessage);
+                LOGGER.info(ex.getMessage());
 
-           }
+            }
 
-           if(ex instanceof SignatureException){
-               var errorMessage= setErrorResponse(ex.getMessage(), String.valueOf(HttpStatus.FORBIDDEN),"UNAUTHORIZED_REQUEST");
-               customServlet(response,errorMessage);
-           }
+            if (ex instanceof SignatureException) {
+                var errorMessage = setErrorResponse(ex.getMessage(), String.valueOf(HttpStatus.FORBIDDEN), "UNAUTHORIZED_REQUEST");
+                customServlet(response, errorMessage);
+            }
 
-           if(ex instanceof MalformedJwtException){
-               var errorMessage= setErrorResponse(ex.getMessage(),String.valueOf(HttpStatus.FORBIDDEN),"UNAUTHORIZED_REQUEST");
-               customServlet(response,errorMessage);
-           }
-           if(ex instanceof ExpiredJwtException){
-               var errorMessage= setErrorResponse(ex.getMessage(),String.valueOf(HttpStatus.FORBIDDEN),"UNAUTHORIZED_REQUEST");
-               customServlet(response,errorMessage);
-           }
+            if (ex instanceof MalformedJwtException) {
+                var errorMessage = setErrorResponse(ex.getMessage(), String.valueOf(HttpStatus.FORBIDDEN), "UNAUTHORIZED_REQUEST");
+                customServlet(response, errorMessage);
+            }
+            if (ex instanceof ExpiredJwtException) {
+                var errorMessage = setErrorResponse(ex.getMessage(), String.valueOf(HttpStatus.FORBIDDEN), "UNAUTHORIZED_REQUEST");
+                customServlet(response, errorMessage);
+            }
 
         }
     }
-//    ! function to create a custom serv;et
+//    ! function to create a custom servlet and error message
 
     public Map<String, Object> setErrorResponse(String message, String statusCode, String errorType) {
 
@@ -116,7 +118,7 @@ customServlet(response,erroMessage);
         return errorMessage;
     }
 
-    private  void customServlet(HttpServletResponse response,Map<String,Object> error) throws IOException {
+    private void customServlet(HttpServletResponse response, Map<String, Object> error) throws IOException {
         response.setContentType("application/json");
         response.setStatus(403);
         response.getWriter().write(objectMapper.writeValueAsString(error));
