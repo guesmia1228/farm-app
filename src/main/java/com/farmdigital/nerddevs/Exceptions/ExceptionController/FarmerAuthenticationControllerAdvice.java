@@ -4,6 +4,8 @@ import com.farmdigital.nerddevs.Exceptions.UserAlreadyExistException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -34,6 +36,17 @@ public class FarmerAuthenticationControllerAdvice {
         problemDetail.setProperty("error", errorMessage);
         return problemDetail;
 
+
+    }
+
+//    ! handle invalid request for the  registration
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public Map<String,String > invalidArguments(MethodArgumentNotValidException ex){
+        ex.getBindingResult()
+                .getFieldErrors()
+                .forEach(error->errorMessage.put(error.getField(),error.getDefaultMessage()));
+        return  errorMessage;
 
     }
 

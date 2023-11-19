@@ -57,7 +57,7 @@ public class UserRegistrationServiceTest {
                 .email("anericokakai@gmail.com")
                 .name("anericokakai")
                 .password("123456")
-                .phoneNumber(792626899)
+                .phoneNumber("792626899")
                 .registrationTime("11/17/2023 at 08:33 PM ")
                 .roles(Collections.singletonList(roles))
                 .typeOfAccount("FARMER")
@@ -68,7 +68,7 @@ public class UserRegistrationServiceTest {
                .name("USER").build();
         newFarmer=FarmerRegistrationDto.builder()
                 .name("anerico")
-                .phoneNumber(792626899)
+                .phoneNumber("792626899")
                 .email("anericokakai@gmail.com")
                 .password("anericokakai@2004")
                 .build();
@@ -143,4 +143,8 @@ public class UserRegistrationServiceTest {
       assertEquals(token,expectedToken);
 
 }
+
+
 }
+
+

@@ -3,10 +3,10 @@ package com.farmdigital.nerddevs.service;
 import com.farmdigital.nerddevs.Dto.AuthenticationDto;
 import com.farmdigital.nerddevs.Dto.FarmerRegistrationDto;
 import com.farmdigital.nerddevs.Exceptions.UserAlreadyExistException;
-import com.farmdigital.nerddevs.model.Roles;
 import com.farmdigital.nerddevs.model.Farmer;
-import com.farmdigital.nerddevs.repository.RolesRepository;
+import com.farmdigital.nerddevs.model.Roles;
 import com.farmdigital.nerddevs.repository.FarmerRepository;
+import com.farmdigital.nerddevs.repository.RolesRepository;
 import com.farmdigital.nerddevs.security.JwtServices;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class UserRegistrationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtServices jwtServices;
     private final RolesRepository rolesRepository;
-    private Map<String, String> response = new HashMap<>();
+    private final Map<String, String> response = new HashMap<>();
 
     public Map<String, String> saveUer(FarmerRegistrationDto user) throws Exception {
 
@@ -52,8 +52,8 @@ public class UserRegistrationService {
                 .registrationTime(timeCreatedAccout())
                 .build();
         farmerRepository.save(newUser);
-        response.put("message","user created successfully");
-        return  response;
+        response.put("message", "user created successfully");
+        return response;
 
     }
 
@@ -61,19 +61,18 @@ public class UserRegistrationService {
 
 
     public String timeCreatedAccout() {
-        DateTimeFormatter formatter= DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a");
         return formatter.format(LocalDateTime.now());
     }
 
     //    ! method that helps us create a unique id for the user
-    public String createUniqueId(int phoneNumber) {
-        String  num= String.valueOf(phoneNumber);
+    public String createUniqueId(String  phoneNumber) {
+
         String uniqueId = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddss"));
-        return "FARMER-"+ num.substring(7) +uniqueId;
+        return "FARMER-" + phoneNumber.substring(7) + uniqueId;
     }
 
 //    ! method to check the time when the user created an account
-
 
 
     public String authenticateauser(AuthenticationDto req) {
@@ -95,5 +94,14 @@ public class UserRegistrationService {
         return jwtServices.generateAToken(user);
 
     }
+//    todo test this email sending method
 
+    public Map<String, String> changePassword(String email) throws EntityNotFoundException {
+
+        Farmer farmer = farmerRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("invalid email adress"));
+
+//! else send email to steve to handle the logic
+        response.put("message", "check your email adress for a link to verify your password");
+        return response;
+    }
 }

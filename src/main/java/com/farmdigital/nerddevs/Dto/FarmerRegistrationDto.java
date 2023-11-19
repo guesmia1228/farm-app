@@ -1,7 +1,9 @@
 package com.farmdigital.nerddevs.Dto;
 
-import jakarta.validation.constraints.Email;
+
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
@@ -10,13 +12,13 @@ import org.hibernate.validator.constraints.Length;
 @Builder
 @NoArgsConstructor
 public class FarmerRegistrationDto {
-    @NotBlank
+    @NotBlank(message = "name cannot be empty")
     private  String name;
     private  String  email=null;
-    @Length(min = 6,max = 16,message = "password must contain atleast six characters")
+    @Pattern(regexp = "^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$",message = "password must contain least 8 character with an upper case , a special character(!,@,$,&,%) and a number ")
     private  String  password;
-    @NotBlank(message = "phone number is a mandatory in order to register a user")
-    private  int phoneNumber;
+    @NotBlank(message = "phone number is a requirement in order to continue with your registarion")
+    private  String  phoneNumber;
 
 
 
