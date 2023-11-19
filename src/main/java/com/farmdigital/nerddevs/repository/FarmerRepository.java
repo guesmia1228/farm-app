@@ -1,13 +1,13 @@
 package com.farmdigital.nerddevs.repository;
 
-import com.farmdigital.nerddevs.model.FarmerModel;
+import com.farmdigital.nerddevs.model.Farmer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface FarmerRepository extends JpaRepository<FarmerModel,Integer> {
+public interface FarmerRepository extends JpaRepository<Farmer,Integer> {
 
-  Optional<FarmerModel> findByEmail(String  email);
-  Optional<FarmerModel> findByName(String name);
+  Optional<Farmer> findByEmail(String  email);
+  Optional<Farmer> findByName(String name);
 
 }
