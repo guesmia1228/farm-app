@@ -1,11 +1,18 @@
 package com.farmdigital.nerddevs.controller;
 import com.farmdigital.nerddevs.Dto.AuthenticationDto;
 import com.farmdigital.nerddevs.Dto.FarmerRegistrationDto;
+import com.farmdigital.nerddevs.Dto.ResetPasswordDto;
 import com.farmdigital.nerddevs.service.UserRegistrationService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,18 +24,26 @@ public class FarmerAuthenticationController {
 
 //    ! add user route
     @PostMapping("/user/register")
-    public ResponseEntity<?> registerUse(@RequestBody FarmerRegistrationDto user) throws Exception{
+    public ResponseEntity<?> registerUse(@RequestBody @Valid FarmerRegistrationDto user) throws Exception{
         var  res= userRegistrationService.saveUer(user);
-
 //
     return  ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
     @PostMapping("/user/authenticate")
 
-    public  ResponseEntity<?> authenticateUser(@RequestBody AuthenticationDto request){
-var res=userRegistrationService.authenticateauser(request);
-        return  ResponseEntity.status(HttpStatus.OK).body(res);
+    public  ResponseEntity<?> authenticateUser(@RequestBody @Valid AuthenticationDto request){
+
+var token=userRegistrationService.authenticateauser(request);
+Map<String ,String > respose=new HashMap<>();
+respose.put("token",token);
+        return  ResponseEntity.status(HttpStatus.OK).body(respose);
     }
 
-// todo  authenticate user route
+
+// ! forgot password route
+    @PostMapping("/user/reset_password")
+    public  ResponseEntity<?> forgotPassword(@RequestBody @Valid ResetPasswordDto resetPasswordDto){
+        var message= userRegistrationService.changePassword(resetPasswordDto.getEmail());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
+    }
 }

@@ -38,7 +38,7 @@ public class Farmer implements UserDetails {
     @Column(name = "registraion_time")
     private  String registrationTime;
     @Column(name = "phone_number")
-    private  int phoneNumber;
+    private  String  phoneNumber;
     @Column(name = "verified_user")
     private  boolean verified=false;
     @Column(name = "account_type")
