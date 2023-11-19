@@ -18,30 +18,33 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @AllArgsConstructor
 public class SecurityAppConfiguration {
     private final FarmerRepository farmerRepository;
-//    ! custom user details
+
+    //    ! custom user details
     @Bean
-    public UserDetailsService userDetailsService(){
-        return username -> farmerRepository.findByEmail(username).orElseThrow(()->new EntityNotFoundException("user not found"));
+    public UserDetailsService userDetailsService() {
+        return username -> farmerRepository.findByEmail(username)
+                .orElseThrow(() -> new EntityNotFoundException("Invalid login credentials"));
     }
 
-//    ! password encoder
+    //    ! password encoder
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
 //    !authentication provider
 
     @Bean
-    public AuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider authProvider= new DaoAuthenticationProvider();
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setPasswordEncoder(passwordEncoder());
         authProvider.setUserDetailsService(userDetailsService());
         return authProvider;
     }
-//    ! Authentication Manager
+
+    //    ! Authentication Manager
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
 
     }
