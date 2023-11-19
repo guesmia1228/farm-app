@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 
 @Data
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 public class FarmerRegistrationDto {
     @NotBlank

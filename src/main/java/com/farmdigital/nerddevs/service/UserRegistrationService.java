@@ -34,9 +34,7 @@ public class UserRegistrationService {
     public Map<String, String> saveUer(FarmerRegistrationDto user) throws Exception {
 
         Roles role = rolesRepository.findByName("USER");
-        System.out.println(user.getEmail());
-        System.out.println(user.getPassword());
-        System.out.println(user.getName());
+
 
 //        ! if the farmer already exist throw an exception
         if (farmerRepository.findByEmail(user.getEmail()).isPresent()) {
@@ -59,13 +57,16 @@ public class UserRegistrationService {
 
     }
 
-    private String timeCreatedAccout() {
+//    ! unique email constraint
+
+
+    public String timeCreatedAccout() {
         DateTimeFormatter formatter= DateTimeFormatter.ofPattern("MM/dd/yyy 'at' hh:mm a");
         return formatter.format(LocalDateTime.now());
     }
 
     //    ! method that helps us create a unique id for the user
-    private String createUniqueId(int phoneNumber) {
+    public String createUniqueId(int phoneNumber) {
         String  num= String.valueOf(phoneNumber);
         String uniqueId = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddss"));
         return "FARMER-"+ num.substring(7) +uniqueId;
