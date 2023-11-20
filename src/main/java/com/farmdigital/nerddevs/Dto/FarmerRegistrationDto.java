@@ -2,10 +2,10 @@ package com.farmdigital.nerddevs.Dto;
 
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
+
 
 @Data
 @AllArgsConstructor
@@ -19,7 +19,7 @@ public class FarmerRegistrationDto {
     private  String  password;
     @NotBlank(message = "phone number is a requirement in order to continue with your registarion")
     private  String  phoneNumber;
-
+//check everything
 
 
 }
