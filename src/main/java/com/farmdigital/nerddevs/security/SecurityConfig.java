@@ -30,9 +30,9 @@ public class SecurityConfig {
                     .permitAll()
                     .anyRequest()
                     .authenticated()
-            )
-            .sessionManagement(sess->sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).authenticationProvider(authenticationProvider)
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+            ).sessionManagement(sess->sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).authenticationProvider(authenticationProvider)
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+    ;
     return httpSecurity.build();
 
 }
