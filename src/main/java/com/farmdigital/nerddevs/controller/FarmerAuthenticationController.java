@@ -24,7 +24,7 @@ public class FarmerAuthenticationController {
     @PostMapping("/user/register")
     public ResponseEntity<?> registerUse(@RequestBody @Valid FarmerRegistrationDto user) throws Exception{
         var  res= userRegistrationService.saveUer(user);
-//
+//1233
     return  ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
     @PostMapping("/user/authenticate")
