@@ -53,7 +53,6 @@ public class JwtFilter extends OncePerRequestFilter {
 //            todo handle errors for only apis which are not whitelisted
             if (authheader == null || !authheader.startsWith("Bearer")) {
 //                LOGGER.info("no json token was provided");
-
                 filterChain.doFilter(request, response);
                 return;
 
@@ -88,24 +87,21 @@ public class JwtFilter extends OncePerRequestFilter {
                                 " , a valid token is required", HttpStatus.FORBIDDEN.toString()
                         , "UNAUTHORIZED_REQUEST");
                 customServlet(response, erroMessage);
-                LOGGER.info(ex.getMessage());
 
-            }
 
-            if (ex instanceof SignatureException) {
+            } else if (ex instanceof SignatureException) {
                 var errorMessage = setErrorResponse(ex.getMessage(), String.valueOf(HttpStatus.FORBIDDEN), "UNAUTHORIZED_REQUEST");
                 customServlet(response, errorMessage);
-            }
-
-            if (ex instanceof MalformedJwtException) {
+            } else if (ex instanceof MalformedJwtException) {
                 var errorMessage = setErrorResponse(ex.getMessage(), String.valueOf(HttpStatus.FORBIDDEN), "UNAUTHORIZED_REQUEST");
                 customServlet(response, errorMessage);
-            }
-            if (ex instanceof ExpiredJwtException) {
+            } else if (ex instanceof ExpiredJwtException) {
                 var errorMessage = setErrorResponse(ex.getMessage(), String.valueOf(HttpStatus.FORBIDDEN), "UNAUTHORIZED_REQUEST");
                 customServlet(response, errorMessage);
+            } else {
+                var err = setErrorResponse(ex.getMessage(), HttpStatus.FORBIDDEN.toString(), "UNAUTHORIZED_REQUEST");
+                customServlet(response, err);
             }
-
         }
     }
 //    ! function to create a custom servlet and error message

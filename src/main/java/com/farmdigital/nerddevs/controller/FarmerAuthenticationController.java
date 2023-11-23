@@ -19,14 +19,12 @@ import java.util.Map;
 
 @RequestMapping("/api/v1/farm_digital/super")
 public class FarmerAuthenticationController {
-
     private  final UserRegistrationService userRegistrationService;
-
 //    ! add user route
     @PostMapping("/user/register")
     public ResponseEntity<?> registerUse(@RequestBody @Valid FarmerRegistrationDto user) throws Exception{
         var  res= userRegistrationService.saveUer(user);
-//
+//1233
     return  ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
     @PostMapping("/user/authenticate")
@@ -38,8 +36,6 @@ Map<String ,String > respose=new HashMap<>();
 respose.put("token",token);
         return  ResponseEntity.status(HttpStatus.OK).body(respose);
     }
-
-
 // ! forgot password route
     @PostMapping("/user/reset_password")
     public  ResponseEntity<?> forgotPassword(@RequestBody @Valid ResetPasswordDto resetPasswordDto){
